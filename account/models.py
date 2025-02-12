@@ -32,7 +32,8 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     name = models.CharField(max_length=70)
     email = models.EmailField(max_length=70, unique=True)
-    country = models.CharField(max_length=15)
+    password = models.CharField(max_length=255)
+    country = models.CharField(max_length=15, choices=COUNTRY_CHOICES)
     age = models.IntegerField(default=0)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)

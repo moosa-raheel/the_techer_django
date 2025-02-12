@@ -1,0 +1,26 @@
+{% extends "base.html" %} 
+{% block content %}
+<div class="max-w-[1440px] w-full mx-auto">
+  <div class="my-11 shadow-2xl rounded-2xl max-w-[1000px] w-[90%] mx-auto px-6 py-10">
+    <h1 class="text-center text-3xl">Register Your Account</h1>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {% for field in form %}
+      <label for="{{field.id_for_label}}" class="block">{{field.label}} : </label>
+      {% if field.name == 'country' %}
+      {{field}}
+      {% else %}
+      <input type="text" class="w-full my-3 rounded-md" name="{{field.name}}" id="{{field.id_for_label}}">
+      {% endif %}
+      {% if field.errors %}
+      {% for error in field.errors %}
+      <p class="mb-3 text-red-600">{{error}}</p>
+      {% endfor %}
+      {% endif %}
+      {% endfor %}
+      <p class="text-right my-3 text-blue-600">already have an account?</p>
+      <input type="submit" value="Signup" class="w-full bg-green-700 text-white py-3 rounded-full">
+    </form>
+  </div>
+</div>
+{% endblock content %}
