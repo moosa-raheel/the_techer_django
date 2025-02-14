@@ -1,0 +1,5 @@
+EMAIL_HOST = your_email_host
+EMAIL_HOST_USER = email_host
+EMAIL_HOST_PASSWORD = email_password
+EMAIL_PORT = email_port
+ADMIN_EMAIL = admin_email

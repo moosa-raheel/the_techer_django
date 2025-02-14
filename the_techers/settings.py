@@ -1,5 +1,6 @@
 from pathlib import Path
 from shutil import which
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -127,3 +128,9 @@ INTERNAL_IPS = [
 ]
 
 NPM_BIN_PATH = which('npm')
+
+#Email setup for development
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = config('EMAIL_PORT')
