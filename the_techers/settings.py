@@ -121,6 +121,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'account.User'
 
+# Site Domain 
+SITE_DOMAIN = "http://127.0.0.1:8000"
+
 TAILWIND_APP_NAME = 'theme'
 
 INTERNAL_IPS = [
