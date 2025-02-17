@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from account.forms import RegistrationForm
+from account.forms import RegistrationForm, LoginForm
 from account.utils import send_email
 from django.contrib import messages
 from django.conf import settings
@@ -9,6 +9,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from account.models import User
+from django.contrib.auth import authenticate, login, logout
 def register(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
@@ -36,4 +37,32 @@ def verify_user(request,uuid,token):
     if default_token_generator.check_token(user,token):
         user.is_active = True
         user.save()
+        messages.success(request,"congratulations! your account has been activate now you can login")
+    return redirect("login")
+
+def login_view(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email, password = form.cleaned_data.values()
+            try:
+                user = User.objects.get(email=email)
+            except User.DoesNotExist:
+                messages.error(request,"username or password is wrong")
+                return redirect("login")
+            if user is not None:
+                if not user.is_active is True:
+                     messages.error(request,"Account is not activated")
+                     return redirect("login")
+                user = authenticate(request,email=email,password=password)
+                if user is not None:
+                    login(request,user)
+                    return HttpResponseRedirect("/")
+    form = LoginForm()
+    return render(request, "account/login.html", {"form": form})
+
+# Logout View 
+def logout_view(request):
+    if request.user.is_authenticated:
+        logout(request)
     return HttpResponseRedirect("/")

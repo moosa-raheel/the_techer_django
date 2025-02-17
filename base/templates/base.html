@@ -8,6 +8,13 @@
     <title>{% block title %}{% endblock title %}</title>
   </head>
   <body>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="fixed top-10 bg-green-600 text-white py-4 px-6 text-2xl">
+      <p>{{message}}</p>
+    </div>
+    {% endfor %}
+    {% endif %}
     {% include "includes/navbar.html" %}
     {% block content %}
     {% endblock content %}
